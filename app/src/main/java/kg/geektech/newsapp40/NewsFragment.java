@@ -2,6 +2,9 @@ package kg.geektech.newsapp40;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,10 +12,6 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.time.Instant;
 import java.time.ZoneId;
@@ -50,10 +49,11 @@ public class NewsFragment extends Fragment {
 
         long created = System.currentTimeMillis();
         ZonedDateTime zonedDateTime = Instant.ofEpochMilli(created).atZone(ZoneId.of("Asia/Bishkek"));
-        String format  = zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm , dd MMM yyyy"));
-        News news = new News(binding.editText.getText().toString(),format );
+        String format = zonedDateTime.format(DateTimeFormatter.ofPattern("HH:mm , dd MMM yyyy"));
+        News news = new News(binding.editText.getText().toString(), format,  "");
         bundle.putSerializable("news", news);
         getParentFragmentManager().setFragmentResult("rk_news", bundle);
+        App.database.newsDao().insetNews(news);
         close();
     }
 

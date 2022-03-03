@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.viewpager2.widget.ViewPager2;
 
+import kg.geektech.newsapp40.Prefs;
 import kg.geektech.newsapp40.R;
 import kg.geektech.newsapp40.databinding.FragmentBoardBinding;
 
@@ -45,12 +46,15 @@ public class BoardFragment extends Fragment {
                 adapter.setListener(new OnClickListener() {
                     @Override
                     public void onClick() {
+                        Prefs prefs = new Prefs(requireContext());
+                        prefs.saveBoardState();
                         NavController navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_activity_main);
                         navController.navigateUp();
                     }
                 });
-        }
-    });
+
+            }
+        });
 
 
         requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), new OnBackPressedCallback(true) {
